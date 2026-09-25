@@ -1,7 +1,14 @@
 // src/screens/HomeScreen/HomeScreen.tsx
+import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React, { useMemo, useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import {
+  Animated,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Avatar } from "../../components/atoms/Avatar/Avatar";
 import { Badge } from "../../components/atoms/Badge/Badge";
 import { Button } from "../../components/atoms/Button/Button";
@@ -24,6 +31,27 @@ export const HomeScreen: React.FC = () => {
   const [nfcScanning, setNfcScanning] = useState(false);
   const [nfcSuccessMsg, setNfcSuccessMsg] = useState<string | null>(null);
   const [isLogModalVisible, setIsLogModalVisible] = useState(false);
+  const [selectedLogType, setSelectedLogType] = useState<string | null>(null);
+
+  // Subtle pulse animation for the Quick Action Toolbar
+  const pulseAnim = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulseAnim, {
+          toValue: 1.03,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(pulseAnim, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ]),
+    ).start();
+  }, [pulseAnim]);
 
   const { data: biomarkers } = useBiomarkers();
   const { data: habits = [] } = useHabits();
@@ -47,45 +75,158 @@ export const HomeScreen: React.FC = () => {
     }
   };
 
+  const handleOpenLogModal = (type?: string) => {
+    setSelectedLogType(type || null);
+    setIsLogModalVisible(true);
+  };
+
   return (
     <View style={styles.screenContainer}>
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Top greeting / status banner with Quick Log Action Button */}
+        {/* Top greeting & status */}
         <View style={styles.topStatus}>
           <View>
             <Text style={styles.greeting}>Good morning, Rajesh</Text>
-            <Text style={styles.clinicalStatus}>Metabolic Phase Active</Text>
+            <Text style={styles.clinicalStatus}>Metabolic Control Phase</Text>
           </View>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-            <Badge label="OPTIMAL" variant="target" withDot={true} />
-            <TouchableOpacity
-              style={{
-                backgroundColor: tokens.colors.primary,
-                paddingHorizontal: 12,
-                paddingVertical: 6,
-                borderRadius: 8,
-              }}
-              onPress={() => setIsLogModalVisible(true)}
-              activeOpacity={0.8}
-            >
-              <Text style={{ color: "#fff", fontWeight: "700", fontSize: 13 }}>
-                + Log
-              </Text>
-            </TouchableOpacity>
-          </View>
+          <Badge label="OPTIMAL" variant="target" withDot={true} />
         </View>
 
         {/* NFC Success Toast */}
         {nfcSuccessMsg && (
           <View style={styles.toast}>
+            <Ionicons
+              name="checkmark-circle"
+              size={16}
+              color={tokens.colors.primary}
+              style={{ marginRight: 6 }}
+            />
             <Text style={styles.toastText}>{nfcSuccessMsg}</Text>
           </View>
         )}
 
-        {/* 1. Programs Navigation Banner Card */}
+        {/* Quick Log Toolbar Card */}
+        <Animated.View style={{ transform: [{ scale: pulseAnim }] }}>
+          <Card variant="elevated" style={styles.quickLogCard}>
+            <View style={styles.quickLogHeader}>
+              <View>
+                <View
+                  style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
+                >
+                  <Text style={styles.quickLogTitle}>Quick Data Logging</Text>
+                  <View style={styles.liveDot} />
+                </View>
+                <Text style={styles.quickLogSubtitle}>
+                  Tap a metric to log instantly
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={styles.expandMenuBtn}
+                onPress={() => handleOpenLogModal()}
+                activeOpacity={0.8}
+              >
+                <Ionicons
+                  name="flash-outline"
+                  size={14}
+                  color={tokens.colors.primary}
+                />
+                <Text style={styles.expandMenuText}>Open Hub</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.logActionsRow}>
+              {["meal", "glucose", "insulin", "workout"].map((type) => {
+                const icons: Record<string, keyof typeof Ionicons.glyphMap> = {
+                  meal: "restaurant-outline",
+                  glucose: "water-outline",
+                  insulin: "medical-outline",
+                  workout: "fitness-outline",
+                };
+                return (
+                  <TouchableOpacity
+                    key={type}
+                    style={styles.logActionItem}
+                    onPress={() => handleOpenLogModal(type)}
+                    activeOpacity={0.7}
+                  >
+                    <View
+                      style={[
+                        styles.logIconCircle,
+                        { backgroundColor: tokens.colors.primarySubtle },
+                      ]}
+                    >
+                      <Ionicons
+                        name={icons[type]}
+                        size={18}
+                        color={tokens.colors.primary}
+                      />
+                    </View>
+                    <Text style={styles.logActionLabel}>
+                      {type.charAt(0).toUpperCase() + type.slice(1)}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </Card>
+        </Animated.View>
+
+        {/* 1. Continuous Interstitial Glucose (CGM) Card */}
+        <Card variant="elevated" style={styles.cgmCard}>
+          <View style={styles.cgmHeader}>
+            <View style={styles.cgmTagRow}>
+              <View style={styles.liveDot} />
+              <Text style={styles.cgmTagText}>LIVE CGM TELEMETRY</Text>
+            </View>
+            <Text style={styles.timeAgo}>Updated live</Text>
+          </View>
+
+          <View style={styles.readingRow}>
+            <Text style={styles.glucoseNumber}>{glucoseValue}</Text>
+            <View style={styles.glucoseMeta}>
+              <Text style={styles.unitText}>mg/dL</Text>
+              <View style={styles.trendRow}>
+                <Ionicons
+                  name="arrow-forward"
+                  size={14}
+                  color={tokens.colors.primary}
+                />
+                <Text style={styles.trendLabel}>STABLE</Text>
+              </View>
+            </View>
+          </View>
+
+          <GlucoseChart currentValue={glucoseValue} />
+
+          <View style={styles.cgmFooter}>
+            <View style={styles.tirBox}>
+              <Text style={styles.tirLabel}>Time in Range (70-140):</Text>
+              <Text style={styles.tirValue}>{tir}%</Text>
+            </View>
+
+            <TouchableOpacity
+              style={styles.nfcButton}
+              onPress={handleNfcScan}
+              activeOpacity={0.8}
+              disabled={nfcScanning}
+            >
+              <Ionicons
+                name="radio-outline"
+                size={14}
+                color={tokens.colors.white}
+                style={{ marginRight: 6 }}
+              />
+              <Text style={styles.nfcBtnText}>
+                {nfcScanning ? "Scanning..." : "Scan Sensor"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </Card>
+
+        {/* 2. Active Clinical Program Card */}
         <TouchableOpacity
           activeOpacity={0.9}
           onPress={() => router.push("/(routes)/programs" as any)}
@@ -123,68 +264,36 @@ export const HomeScreen: React.FC = () => {
                 <Text
                   style={{ fontSize: 13, color: tokens.colors.textSecondary }}
                 >
-                  Phase 2: Acceleration & Glycemic Control • Day 42 of 90
+                  Phase 2: Glycemic Control • Day 42 of 90
                 </Text>
               </View>
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: tokens.colors.primary,
-                  fontWeight: "bold",
-                }}
+              <View
+                style={[
+                  styles.iconButtonCircle,
+                  { backgroundColor: tokens.colors.primarySubtle },
+                ]}
               >
-                →
-              </Text>
+                <Ionicons
+                  name="chevron-forward"
+                  size={18}
+                  color={tokens.colors.primary}
+                />
+              </View>
             </View>
           </Card>
         </TouchableOpacity>
 
-        {/* 2. Continuous Interstitial Glucose (CGM) Card */}
-        <Card variant="elevated" style={styles.cgmCard}>
-          <View style={styles.cgmHeader}>
-            <View style={styles.cgmTagRow}>
-              <View style={styles.liveDot} />
-              <Text style={styles.cgmTagText}>LIVE CGM BIO-STREAM</Text>
-            </View>
-            <Text style={styles.timeAgo}>Synced just now</Text>
-          </View>
-
-          <View style={styles.readingRow}>
-            <Text style={styles.glucoseNumber}>{glucoseValue}</Text>
-            <View style={styles.glucoseMeta}>
-              <Text style={styles.unitText}>mg/dL</Text>
-              <View style={styles.trendRow}>
-                <Text style={styles.trendArrow}>→</Text>
-                <Text style={styles.trendLabel}>STABLE</Text>
-              </View>
-            </View>
-          </View>
-
-          <GlucoseChart currentValue={glucoseValue} />
-
-          <View style={styles.cgmFooter}>
-            <View style={styles.tirBox}>
-              <Text style={styles.tirLabel}>Time in Range (70-140):</Text>
-              <Text style={styles.tirValue}>{tir}%</Text>
-            </View>
-
-            <TouchableOpacity
-              style={styles.nfcButton}
-              onPress={handleNfcScan}
-              activeOpacity={0.8}
-              disabled={nfcScanning}
-            >
-              <Text style={styles.nfcBtnText}>
-                {nfcScanning ? "Scanning..." : "📡 Scan CGM"}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </Card>
-
         {/* 3. Three-Column Biomarker Bento */}
         <View style={styles.bentoGrid}>
           <View style={styles.bentoItem}>
-            <Text style={styles.bentoLabel}>ACTIVE BURN</Text>
+            <View style={styles.bentoHeaderRow}>
+              <Text style={styles.bentoLabel}>ACTIVE BURN</Text>
+              <Ionicons
+                name="flame-outline"
+                size={14}
+                color={tokens.colors.primary}
+              />
+            </View>
             <View style={styles.bentoMain}>
               <Text style={styles.bentoNumber}>
                 {biomarkers?.burnCalories || 480}
@@ -195,7 +304,14 @@ export const HomeScreen: React.FC = () => {
           </View>
 
           <View style={styles.bentoItem}>
-            <Text style={styles.bentoLabel}>STEPS TODAY</Text>
+            <View style={styles.bentoHeaderRow}>
+              <Text style={styles.bentoLabel}>STEPS TODAY</Text>
+              <Ionicons
+                name="footsteps-outline"
+                size={14}
+                color={tokens.colors.primary}
+              />
+            </View>
             <View style={styles.bentoMain}>
               <Text style={styles.bentoNumber}>
                 {(biomarkers?.steps || 7420).toLocaleString()}
@@ -205,10 +321,17 @@ export const HomeScreen: React.FC = () => {
           </View>
 
           <View style={styles.bentoItem}>
-            <Text style={styles.bentoLabel}>SLEEP RECOVERY</Text>
+            <View style={styles.bentoHeaderRow}>
+              <Text style={styles.bentoLabel}>RECOVERY</Text>
+              <Ionicons
+                name="moon-outline"
+                size={14}
+                color={tokens.colors.primary}
+              />
+            </View>
             <View style={styles.bentoMain}>
               <Text style={styles.bentoNumber}>
-                {biomarkers?.sleepHours || 7}h {biomarkers?.sleepMinutes || 25}m
+                {biomarkers?.sleepHours || 7}h
               </Text>
             </View>
             <Text style={styles.bentoSub}>
@@ -231,30 +354,29 @@ export const HomeScreen: React.FC = () => {
                 Lead Metabolic Endocrinologist
               </Text>
             </View>
-            <Badge label="TODAY'S NOTE" variant="target" />
+            <Badge label="NOTE" variant="target" />
           </View>
 
           <Text style={styles.docQuote}>
             "Excellent post-lunch glucose regulation at 108 mg/dL. Before
-            dinner, complete 15 min of Zone-2 brisk walking to clear hepatic
-            glycogen."
+            dinner, complete 15 min of brisk walking."
           </Text>
 
           <View style={styles.docFooter}>
             <Button
-              label="Join Video Room (4:30 PM)"
+              label="Join Video Consultation (4:30 PM)"
               variant="primary"
               size="sm"
               onPress={() => router.push("/(routes)/consult" as any)}
-              leftIconName="🎥"
+              leftIconName="video"
             />
           </View>
         </Card>
 
-        {/* 5. Daily Metabolic Protocol (Habits) */}
+        {/* 5. Daily Metabolic Habits Protocol */}
         <View style={styles.habitsSection}>
           <View style={styles.habitsHeader}>
-            <Text style={styles.sectionTitle}>Daily Metabolic Habits</Text>
+            <Text style={styles.sectionTitle}>Daily Protocols</Text>
             <Text style={styles.sectionCount}>
               {habits.filter((h) => h.completed).length}/{habits.length || 3}{" "}
               Done
@@ -282,7 +404,9 @@ export const HomeScreen: React.FC = () => {
                   item.completed && styles.checkboxActive,
                 ]}
               >
-                {item.completed && <Text style={styles.checkMark}>✓</Text>}
+                {item.completed && (
+                  <Ionicons name="checkmark" size={14} color="#FFF" />
+                )}
               </View>
 
               <View style={{ flex: 1 }}>
@@ -308,8 +432,12 @@ export const HomeScreen: React.FC = () => {
         visible={isLogModalVisible}
         onClose={() => setIsLogModalVisible(false)}
         onSelectCategory={(categoryId) => {
-          console.log("Selected logging category:", categoryId);
-          // Handle specific log category selection navigation if needed
+          console.log(
+            "Selected logging category:",
+            categoryId,
+            selectedLogType,
+          );
+          setIsLogModalVisible(false);
         }}
       />
     </View>

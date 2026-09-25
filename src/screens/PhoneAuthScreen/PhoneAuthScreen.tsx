@@ -1,3 +1,4 @@
+import { Ionicons } from "@expo/vector-icons";
 import React, { useMemo, useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -55,12 +56,22 @@ export const PhoneAuthScreen: React.FC<PhoneAuthScreenProps> = ({
             onPress={onBack}
             activeOpacity={0.7}
           >
-            <Text style={styles.backArrow}>← Back</Text>
+            <Ionicons
+              name="arrow-back"
+              size={18}
+              color={tokens.colors.textPrimary}
+              style={{ marginRight: 6 }}
+            />
+            <Text style={styles.backArrow}>Back</Text>
           </TouchableOpacity>
 
           <View style={styles.header}>
             <View style={styles.iconCircle}>
-              <Text style={styles.iconEmoji}>🔐</Text>
+              <Ionicons
+                name="lock-closed-outline"
+                size={24}
+                color={tokens.colors.primary}
+              />
             </View>
             <Text style={styles.title}>Clinical Access Portal</Text>
             <Text style={styles.subtitle}>
@@ -73,7 +84,12 @@ export const PhoneAuthScreen: React.FC<PhoneAuthScreenProps> = ({
             <Text style={styles.inputLabel}>Mobile Phone Number</Text>
             <View style={styles.phoneInputRow}>
               <View style={styles.countryCodeBox}>
-                <Text style={styles.flag}>🇮🇳</Text>
+                <Ionicons
+                  name="globe-outline"
+                  size={16}
+                  color={tokens.colors.textSecondary}
+                  style={{ marginRight: 4 }}
+                />
                 <Text style={styles.countryCode}>{countryCode}</Text>
               </View>
               <TextInput
@@ -102,8 +118,14 @@ export const PhoneAuthScreen: React.FC<PhoneAuthScreenProps> = ({
           </Card>
 
           <View style={styles.securityBadge}>
+            <Ionicons
+              name="shield-checkmark-outline"
+              size={14}
+              color={tokens.colors.primary}
+              style={{ marginRight: 6 }}
+            />
             <Text style={styles.securityText}>
-              🔒 256-Bit HIPAA & ABDM Compliant Health Data Encryption
+              256-Bit HIPAA & ABDM Compliant Health Data Encryption
             </Text>
           </View>
         </View>

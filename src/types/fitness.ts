@@ -27,8 +27,8 @@ export interface GlucosePoint {
 
 export interface BiomarkerProgress {
   currentGlucose: number;
-  glucoseTrend: 'flat' | 'up' | 'down';
-  glucoseStatus: 'in-target' | 'elevated' | 'low';
+  glucoseTrend: "flat" | "up" | "down";
+  glucoseStatus: "in-target" | "elevated" | "low";
   lastSyncTime: string;
   timeInRangePercent: number;
   standardDeviation: number;
@@ -55,11 +55,19 @@ export interface MetabolicHabit {
 
 export interface TimelineLogItem {
   id: string;
-  type: 'meal' | 'glucose' | 'sleep' | 'medication' | 'workout' | 'weight' | 'vitals' | 'report';
+  type:
+    | "meal"
+    | "glucose"
+    | "sleep"
+    | "medication"
+    | "workout"
+    | "weight"
+    | "vitals"
+    | "report";
   title: string;
   time: string;
   badge: string;
-  badgeType: 'target' | 'attention' | 'purple' | 'blue' | 'neutral';
+  badgeType: "target" | "attention" | "purple" | "blue" | "neutral";
   impactText: string;
   details?: string;
   metrics: string[];
@@ -86,8 +94,8 @@ export interface Consultation {
   doctorAvatar: string;
   date: string;
   timeSlot: string;
-  mode: 'video' | 'chat';
-  status: 'confirmed' | 'completed' | 'cancelled';
+  mode: "video" | "chat";
+  status: "confirmed" | "completed" | "cancelled";
   autoShareCgm: boolean;
   createdAt: number;
 }
@@ -98,7 +106,8 @@ export interface StoreItem {
   description: string;
   category: string;
   price: number;
-  originalPrice: number;
+  originalPrice?: number;
+  discount?: string; // <-- Add this line
   rating: number;
   reviewsCount: number;
   image: string;
@@ -115,7 +124,7 @@ export interface ClinicalProgram {
   reviewsCount: number;
   monthlyPrice: number;
   image: string;
-  category: 'diabetes' | 'metabolism' | 'pcos' | 'vitals';
+  category: "diabetes" | "metabolism" | "pcos" | "vitals";
   features: string[];
   isPopular?: boolean;
 }

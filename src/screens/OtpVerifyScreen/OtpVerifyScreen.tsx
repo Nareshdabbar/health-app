@@ -1,3 +1,4 @@
+import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -70,17 +71,28 @@ export const OtpVerifyScreen: React.FC<OtpVerifyScreenProps> = ({
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.container}>
+          {/* Back / Edit Number Button */}
           <TouchableOpacity
             style={styles.backBtn}
             onPress={onBack}
             activeOpacity={0.7}
           >
-            <Text style={styles.backArrow}>← Edit Number</Text>
+            <Ionicons
+              name="arrow-back"
+              size={18}
+              color={tokens.colors.primaryDark}
+              style={{ marginRight: 6 }}
+            />
+            <Text style={styles.backArrow}>Edit Number</Text>
           </TouchableOpacity>
 
           <View style={styles.header}>
             <View style={styles.iconCircle}>
-              <Text style={styles.iconEmoji}>📲</Text>
+              <Ionicons
+                name="phone-portrait-outline"
+                size={26}
+                color={tokens.colors.primary}
+              />
             </View>
             <Text style={styles.title}>Verification Code</Text>
             <Text style={styles.subtitle}>
@@ -109,10 +121,18 @@ export const OtpVerifyScreen: React.FC<OtpVerifyScreenProps> = ({
               onPress={() => setOtp("1234")}
               activeOpacity={0.7}
             >
-              <Text style={styles.demoTipText}>
-                💡 Demo code: <Text style={{ fontWeight: "800" }}>1234</Text>{" "}
-                (Tap to auto-fill)
-              </Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Ionicons
+                  name="bulb-outline"
+                  size={14}
+                  color={tokens.colors.primaryDark}
+                  style={{ marginRight: 4 }}
+                />
+                <Text style={styles.demoTipText}>
+                  Demo code: <Text style={{ fontWeight: "800" }}>1234</Text>{" "}
+                  (Tap to auto-fill)
+                </Text>
+              </View>
             </TouchableOpacity>
 
             <Button

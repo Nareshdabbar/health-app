@@ -1,5 +1,5 @@
 {
-  "name": "digital-therapeutics-app",
+  "name": "meta-health",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "dependencies": {

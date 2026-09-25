@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useState, useMemo } from 'react';
-import { LightTokens, DarkTokens, ThemeTokens } from './tokens';
+// E:\app\src\theme\ThemeContext.tsx
+import React, { createContext, useContext, useMemo, useState } from "react";
+import { DarkTokens, LightTokens, ThemeTokens } from "./tokens";
 
-export type ThemeMode = 'light' | 'dark';
+export type ThemeMode = "light" | "dark";
 
 interface ThemeContextType {
   mode: ThemeMode;
@@ -12,20 +13,26 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  mode: 'light',
-  tokens: LightTokens,
+  mode: "dark", // Updated default context value
+  tokens: DarkTokens, // Updated default tokens
   toggleTheme: () => {},
   setMode: () => {},
-  isDark: false,
+  isDark: true, // Updated default boolean
 });
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [mode, setMode] = useState<ThemeMode>('light');
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  // Change initial state from 'light' to 'dark' here:
+  const [mode, setMode] = useState<ThemeMode>("dark");
 
-  const tokens = useMemo(() => (mode === 'dark' ? DarkTokens : LightTokens), [mode]);
+  const tokens = useMemo(
+    () => (mode === "dark" ? DarkTokens : LightTokens),
+    [mode],
+  );
 
   const toggleTheme = () => {
-    setMode((prev) => (prev === 'light' ? 'dark' : 'light'));
+    setMode((prev) => (prev === "light" ? "dark" : "light"));
   };
 
   return (
@@ -35,7 +42,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         tokens,
         toggleTheme,
         setMode,
-        isDark: mode === 'dark',
+        isDark: mode === "dark",
       }}
     >
       {children}

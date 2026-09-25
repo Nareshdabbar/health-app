@@ -1,4 +1,3 @@
-// E:\app\src\components\molecules\Header\Header.tsx
 import { Ionicons } from "@expo/vector-icons";
 import { Href, useRouter } from "expo-router";
 import React, { useMemo } from "react";
@@ -27,7 +26,7 @@ export const Header: React.FC<HeaderProps> = ({
   const insets = useSafeAreaInsets();
   const router = useRouter();
 
-  // Handle profile / avatar press internally
+  // Internal handler for profile/avatar click navigation
   const handleProfilePress = () => {
     router.push("/(routes)/profile" as Href);
   };

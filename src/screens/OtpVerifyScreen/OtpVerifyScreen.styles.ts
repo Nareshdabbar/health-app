@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { ThemeTokens } from '../../theme/tokens';
+import { StyleSheet } from "react-native";
+import { ThemeTokens } from "../../theme/tokens";
 
 export const createOtpVerifyStyles = (tokens: ThemeTokens) =>
   StyleSheet.create({
@@ -10,24 +10,28 @@ export const createOtpVerifyStyles = (tokens: ThemeTokens) =>
     container: {
       padding: tokens.spacing.xl,
       maxWidth: 480,
-      alignSelf: 'center',
-      width: '100%',
+      alignSelf: "center",
+      width: "100%",
       flex: 1,
-      justifyContent: 'center',
+      justifyContent: "center",
     },
     backBtn: {
-      position: 'absolute',
+      position: "absolute",
       top: 20,
       left: 20,
       padding: 8,
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 4,
     },
     backArrow: {
       fontSize: tokens.fontSize.base,
-      fontWeight: '700',
+      fontWeight: "700",
       color: tokens.colors.primaryDark,
     },
     header: {
-      alignItems: 'center',
+      alignItems: "center",
       marginBottom: tokens.spacing.xl,
     },
     iconCircle: {
@@ -35,8 +39,8 @@ export const createOtpVerifyStyles = (tokens: ThemeTokens) =>
       height: 64,
       borderRadius: 32,
       backgroundColor: tokens.colors.primarySubtle,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
       marginBottom: tokens.spacing.lg,
     },
     iconEmoji: {
@@ -44,18 +48,18 @@ export const createOtpVerifyStyles = (tokens: ThemeTokens) =>
     },
     title: {
       fontSize: tokens.fontSize.xl,
-      fontWeight: '800',
+      fontWeight: "800",
       color: tokens.colors.textPrimary,
       marginBottom: 8,
     },
     subtitle: {
       fontSize: tokens.fontSize.sm,
       color: tokens.colors.textSecondary,
-      textAlign: 'center',
+      textAlign: "center",
       lineHeight: 18,
     },
     boldPhone: {
-      fontWeight: '700',
+      fontWeight: "700",
       color: tokens.colors.textPrimary,
     },
     card: {
@@ -64,28 +68,28 @@ export const createOtpVerifyStyles = (tokens: ThemeTokens) =>
     },
     prompt: {
       fontSize: tokens.fontSize.xs,
-      fontWeight: '700',
+      fontWeight: "700",
       color: tokens.colors.textSecondary,
-      textAlign: 'center',
+      textAlign: "center",
     },
     errorText: {
       fontSize: tokens.fontSize.xs,
       color: tokens.colors.error,
-      textAlign: 'center',
-      fontWeight: '600',
+      textAlign: "center",
+      fontWeight: "600",
     },
     demoTip: {
       backgroundColor: tokens.colors.primarySubtle,
       padding: 10,
       borderRadius: tokens.radius.md,
-      alignItems: 'center',
+      alignItems: "center",
     },
     demoTipText: {
       fontSize: tokens.fontSize.xs,
       color: tokens.colors.primaryDark,
     },
     resendRow: {
-      alignItems: 'center',
+      alignItems: "center",
       marginTop: 4,
     },
     timerText: {
@@ -94,7 +98,7 @@ export const createOtpVerifyStyles = (tokens: ThemeTokens) =>
     },
     resendBtn: {
       fontSize: tokens.fontSize.sm,
-      fontWeight: '700',
+      fontWeight: "700",
       color: tokens.colors.primary,
     },
   });

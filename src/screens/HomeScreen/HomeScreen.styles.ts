@@ -38,6 +38,8 @@ export const createHomeScreenStyles = (tokens: ThemeTokens) =>
       paddingHorizontal: 16,
       borderRadius: tokens.radius.md,
       marginBottom: tokens.spacing.md,
+      flexDirection: "row",
+      alignItems: "center",
     },
     toastText: {
       color: tokens.colors.primary,
@@ -103,11 +105,6 @@ export const createHomeScreenStyles = (tokens: ThemeTokens) =>
       gap: 2,
       marginTop: 2,
     },
-    trendArrow: {
-      fontSize: 12,
-      fontWeight: "800",
-      color: tokens.colors.primary,
-    },
     trendLabel: {
       fontSize: tokens.fontSize.xs,
       fontWeight: "800",
@@ -134,6 +131,8 @@ export const createHomeScreenStyles = (tokens: ThemeTokens) =>
       color: tokens.colors.primaryDark,
     },
     nfcButton: {
+      flexDirection: "row",
+      alignItems: "center",
       backgroundColor: tokens.colors.obsidian,
       paddingHorizontal: 12,
       paddingVertical: 7,
@@ -157,11 +156,16 @@ export const createHomeScreenStyles = (tokens: ThemeTokens) =>
       borderWidth: 1,
       borderColor: tokens.colors.border,
     },
+    bentoHeaderRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 4,
+    },
     bentoLabel: {
       fontSize: 10,
       fontWeight: "700",
       color: tokens.colors.textSecondary,
-      marginBottom: 4,
     },
     bentoMain: {
       flexDirection: "row",
@@ -191,7 +195,6 @@ export const createHomeScreenStyles = (tokens: ThemeTokens) =>
       alignItems: "center",
       marginBottom: 12,
     },
-    // Explicit high-contrast light text colors for dark/obsidian cards
     docName: {
       fontSize: tokens.fontSize.md,
       fontWeight: "700",
@@ -259,11 +262,6 @@ export const createHomeScreenStyles = (tokens: ThemeTokens) =>
       backgroundColor: tokens.colors.primary,
       borderColor: tokens.colors.primary,
     },
-    checkMark: {
-      color: "#FFF",
-      fontSize: 12,
-      fontWeight: "800",
-    },
     habitTitle: {
       fontSize: tokens.fontSize.sm,
       fontWeight: "700",
@@ -277,5 +275,76 @@ export const createHomeScreenStyles = (tokens: ThemeTokens) =>
       fontSize: tokens.fontSize.xs,
       color: tokens.colors.textSecondary,
       marginTop: 2,
+    },
+    quickLogCard: {
+      marginBottom: tokens.spacing.lg,
+      padding: 14,
+      backgroundColor: tokens.colors.surface,
+      borderColor: tokens.colors.border,
+      borderWidth: 1,
+    },
+    quickLogHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 12,
+    },
+    quickLogTitle: {
+      fontSize: tokens.fontSize.base,
+      fontWeight: "700",
+      color: tokens.colors.textPrimary,
+    },
+    quickLogSubtitle: {
+      fontSize: tokens.fontSize.xs,
+      color: tokens.colors.textSecondary,
+      marginTop: 1,
+    },
+    expandMenuBtn: {
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: tokens.colors.primarySubtle,
+      paddingHorizontal: 10,
+      paddingVertical: 5,
+      borderRadius: tokens.radius.full,
+      gap: 4,
+    },
+    expandMenuText: {
+      fontSize: tokens.fontSize.xs,
+      fontWeight: "700",
+      color: tokens.colors.primary,
+    },
+    logActionsRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      gap: 8,
+    },
+    logActionItem: {
+      flex: 1,
+      alignItems: "center",
+      backgroundColor: tokens.colors.surfaceSubtle,
+      paddingVertical: 10,
+      borderRadius: tokens.radius.md,
+      borderWidth: 1,
+      borderColor: tokens.colors.border,
+    },
+    logIconCircle: {
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+      alignItems: "center",
+      justifyContent: "center",
+      marginBottom: 6,
+    },
+    logActionLabel: {
+      fontSize: tokens.fontSize.xs,
+      fontWeight: "600",
+      color: tokens.colors.textPrimary,
+    },
+    iconButtonCircle: {
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+      alignItems: "center",
+      justifyContent: "center",
     },
   });
