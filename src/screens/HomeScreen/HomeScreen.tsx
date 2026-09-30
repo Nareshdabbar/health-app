@@ -23,6 +23,7 @@ import {
 } from "../../hooks/useFitnessData";
 import { useTheme } from "../../theme/ThemeContext";
 import { createHomeScreenStyles } from "./HomeScreen.styles";
+import { useWalkSensor } from "@/src/hooks/useWalkSensor";
 
 export const HomeScreen: React.FC = () => {
   const { tokens } = useTheme();
@@ -58,6 +59,12 @@ export const HomeScreen: React.FC = () => {
   const toggleMutation = useToggleHabit();
   const scanMutation = useScanSensor();
 
+// const { sessionSteps } = useWalkSensor(true);
+const { sessionSteps, isPedometerAvailable } = useWalkSensor(true);
+
+console.log("Pedometer:", isPedometerAvailable);
+console.log("Steps:", sessionSteps);
+  
   const glucoseValue = biomarkers?.currentGlucose || 108;
   const tir = biomarkers?.timeInRangePercent || 92;
 
@@ -314,7 +321,8 @@ export const HomeScreen: React.FC = () => {
             </View>
             <View style={styles.bentoMain}>
               <Text style={styles.bentoNumber}>
-                {(biomarkers?.steps || 7420).toLocaleString()}
+                {/* {(biomarkers?.steps || 7420).toLocaleString()} */}
+                {sessionSteps.toLocaleString()}
               </Text>
             </View>
             <Text style={styles.bentoSub}>Goal: 10,000</Text>

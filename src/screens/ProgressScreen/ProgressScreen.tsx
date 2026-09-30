@@ -1,4 +1,4 @@
-// src/screens/ProgressScreen/ProgressScreen.tsx
+import { router } from "expo-router";
 import { useTheme } from "@/src/theme/ThemeContext";
 import React, { useMemo, useState } from "react";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -15,6 +15,16 @@ export const ProgressScreen: React.FC = () => {
   const subTabs = ["Progress", "Glucometer", "Weighing"];
 
   const handleCardPress = (metricName: string) => {
+    if (metricName === "Heart Rate") {
+      router.push("/(routes)/heart-rate" as any);
+      return;
+    }
+
+    if (metricName === "Steps") {
+      router.push("/(routes)/walk-count" as any);
+      return;
+    }
+
     Alert.alert(
       "Detailed View",
       `Opening deep analytics and history for ${metricName}.`,
@@ -33,6 +43,7 @@ export const ProgressScreen: React.FC = () => {
       <View style={styles.subTabContainer}>
         {subTabs.map((tab) => {
           const isActive = activeSubTab === tab;
+
           return (
             <TouchableOpacity
               key={tab}
@@ -66,9 +77,11 @@ export const ProgressScreen: React.FC = () => {
           onCardPress={handleCardPress}
         />
       )}
+
       {activeSubTab === "Glucometer" && (
         <GlucometerTabContent styles={styles} tokens={tokens} />
       )}
+
       {activeSubTab === "Weighing" && (
         <WeighingTabContent styles={styles} tokens={tokens} />
       )}
