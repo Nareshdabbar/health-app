@@ -13,7 +13,13 @@
     },
     "android": {
       "package": "com.metahealth.app",
-      "permissions": ["android.permission.ACTIVITY_RECOGNITION"],
+      "permissions": [
+        "android.permission.ACTIVITY_RECOGNITION",
+        "android.permission.CAMERA",
+        "android.permission.health.READ_HEART_RATE",
+        "android.permission.BLUETOOTH_SCAN",
+        "android.permission.BLUETOOTH_CONNECT"
+      ],
       "packagePerArchitecture": true,
       "adaptiveIcon": {
         "backgroundColor": "#0F172A",
@@ -31,7 +37,8 @@
     "jsEngine": "hermes",
     "plugins": [
       "expo-router",
-        "expo-camera",
+      "expo-camera",
+      "react-native-health-connect",
       [
         "expo-splash-screen",
         {
@@ -46,9 +53,9 @@
           "android": {
             "compileSdkVersion": 36,
             "targetSdkVersion": 36,
-            "minSdkVersion": 24,
+            "minSdkVersion": 26,
             "ndkVersion": "26.1.10909125",
-           "buildArchs": ["arm64-v8a"]
+            "buildArchs": ["arm64-v8a"]
           }
         }
       ]

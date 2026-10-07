@@ -1,6 +1,4 @@
-
 import { StyleSheet } from "react-native";
-
 import { ThemeTokens } from "../../theme/tokens";
 
 export const createHeartRateScreenStyles = (tokens: ThemeTokens) =>
@@ -37,47 +35,163 @@ export const createHeartRateScreenStyles = (tokens: ThemeTokens) =>
       fontWeight: "500",
     },
 
-    centerState: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-      paddingHorizontal: tokens.spacing.lg,
-    },
-
-    stateCard: {
+    cameraCard: {
       backgroundColor: tokens.colors.surfaceElevated,
       borderRadius: tokens.radius.lg,
       borderWidth: 1,
       borderColor: tokens.colors.border,
-      padding: tokens.spacing.lg,
-      alignItems: "center",
+      overflow: "hidden",
+      marginBottom: tokens.spacing.md,
     },
 
-    stateIconCircle: {
-      width: 68,
-      height: 68,
-      borderRadius: 34,
+    cameraPreviewContainer: {
+      height: 320,
+      position: "relative",
+      overflow: "hidden",
+      backgroundColor: tokens.colors.obsidian,
+    },
+
+    cameraPreview: {
+      ...StyleSheet.absoluteFill,
+    },
+
+    cameraPlaceholder: {
+      minHeight: 300,
+      alignItems: "center",
+      justifyContent: "center",
+      padding: tokens.spacing.lg,
+      backgroundColor: tokens.colors.surfaceSubtle,
+    },
+
+    cameraIconCircle: {
+      width: 64,
+      height: 64,
+      borderRadius: 32,
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: tokens.colors.primarySubtle,
       marginBottom: tokens.spacing.md,
     },
 
-    stateTitle: {
+    cameraTitle: {
       fontSize: tokens.fontSize.lg,
       fontWeight: "800",
       color: tokens.colors.textPrimary,
-      textAlign: "center",
       marginBottom: tokens.spacing.xs,
+      textAlign: "center",
     },
 
-    stateText: {
-      maxWidth: 340,
-      fontSize: tokens.fontSize.xs,
-      lineHeight: 19,
-      color: tokens.colors.textSecondary,
+    cameraText: {
+      maxWidth: 300,
       textAlign: "center",
-      marginBottom: tokens.spacing.lg,
+      fontSize: tokens.fontSize.xs,
+      lineHeight: 18,
+      color: tokens.colors.textSecondary,
+    },
+
+    fingerGuide: {
+      position: "absolute",
+      left: "50%",
+      top: "50%",
+      width: 210,
+      height: 170,
+      marginLeft: -105,
+      marginTop: -85,
+      alignItems: "center",
+      justifyContent: "center",
+      paddingHorizontal: tokens.spacing.md,
+    },
+
+    fingerGuideCornerTopLeft: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: 30,
+      height: 30,
+      borderTopWidth: 3,
+      borderLeftWidth: 3,
+      borderColor: tokens.colors.white,
+      borderTopLeftRadius: tokens.radius.md,
+    },
+
+    fingerGuideCornerTopRight: {
+      position: "absolute",
+      top: 0,
+      right: 0,
+      width: 30,
+      height: 30,
+      borderTopWidth: 3,
+      borderRightWidth: 3,
+      borderColor: tokens.colors.white,
+      borderTopRightRadius: tokens.radius.md,
+    },
+
+    fingerGuideCornerBottomLeft: {
+      position: "absolute",
+      bottom: 0,
+      left: 0,
+      width: 30,
+      height: 30,
+      borderBottomWidth: 3,
+      borderLeftWidth: 3,
+      borderColor: tokens.colors.white,
+      borderBottomLeftRadius: tokens.radius.md,
+    },
+
+    fingerGuideCornerBottomRight: {
+      position: "absolute",
+      bottom: 0,
+      right: 0,
+      width: 30,
+      height: 30,
+      borderBottomWidth: 3,
+      borderRightWidth: 3,
+      borderColor: tokens.colors.white,
+      borderBottomRightRadius: tokens.radius.md,
+    },
+
+    fingerGuideTitle: {
+      marginTop: tokens.spacing.sm,
+      fontSize: tokens.fontSize.sm,
+      fontWeight: "800",
+      color: tokens.colors.white,
+      textAlign: "center",
+    },
+
+    fingerGuideText: {
+      marginTop: tokens.spacing.xs,
+      fontSize: tokens.fontSize.xs,
+      lineHeight: 17,
+      color: tokens.colors.white,
+      textAlign: "center",
+      opacity: 0.9,
+    },
+
+    measuringBadge: {
+      position: "absolute",
+      top: tokens.spacing.md,
+      right: tokens.spacing.md,
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: tokens.colors.surface,
+      paddingHorizontal: tokens.spacing.sm,
+      paddingVertical: tokens.spacing.xs,
+      borderRadius: tokens.radius.full,
+    },
+
+    measuringDot: {
+      width: 7,
+      height: 7,
+      borderRadius: 4,
+      backgroundColor: tokens.colors.primary,
+      marginRight: 6,
+    },
+
+    measuringText: {
+      fontSize: 9,
+      fontWeight: "800",
+      color: tokens.colors.primary,
+      letterSpacing: 0.5,
     },
 
     statusCard: {
@@ -102,9 +216,9 @@ export const createHeartRateScreenStyles = (tokens: ThemeTokens) =>
     },
 
     statusIconCircle: {
-      width: 40,
-      height: 40,
-      borderRadius: 20,
+      width: 38,
+      height: 38,
+      borderRadius: 19,
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: tokens.colors.primarySubtle,
@@ -166,81 +280,6 @@ export const createHeartRateScreenStyles = (tokens: ThemeTokens) =>
       fontWeight: "700",
       color: tokens.colors.textSecondary,
       marginLeft: 7,
-    },
-
-    noDataText: {
-      marginTop: tokens.spacing.sm,
-      fontSize: tokens.fontSize.xs,
-      lineHeight: 18,
-      color: tokens.colors.textSecondary,
-    },
-
-    dataSourceText: {
-      marginTop: tokens.spacing.sm,
-      fontSize: tokens.fontSize.xs,
-      lineHeight: 18,
-      color: tokens.colors.textSecondary,
-    },
-
-    sourceCard: {
-      flexDirection: "row",
-      alignItems: "flex-start",
-      backgroundColor: tokens.colors.surfaceSubtle,
-      borderRadius: tokens.radius.md,
-      borderWidth: 1,
-      borderColor: tokens.colors.border,
-      padding: tokens.spacing.md,
-      marginBottom: tokens.spacing.md,
-    },
-
-    sourceIconCircle: {
-      width: 42,
-      height: 42,
-      borderRadius: 21,
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: tokens.colors.primarySubtle,
-    },
-
-    dataSummaryCard: {
-      backgroundColor: tokens.colors.surfaceElevated,
-      borderRadius: tokens.radius.md,
-      borderWidth: 1,
-      borderColor: tokens.colors.border,
-      padding: tokens.spacing.md,
-      marginBottom: tokens.spacing.md,
-    },
-
-    dataSummaryRow: {
-      flexDirection: "row",
-      alignItems: "center",
-    },
-
-    dataSummaryIcon: {
-      width: 42,
-      height: 42,
-      borderRadius: 21,
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: tokens.colors.primarySubtle,
-    },
-
-    dataSummaryContent: {
-      flex: 1,
-      marginLeft: tokens.spacing.sm,
-    },
-
-    dataSummaryTitle: {
-      fontSize: tokens.fontSize.sm,
-      fontWeight: "700",
-      color: tokens.colors.textPrimary,
-    },
-
-    dataSummaryText: {
-      fontSize: tokens.fontSize.xs,
-      lineHeight: 17,
-      color: tokens.colors.textSecondary,
-      marginTop: 2,
     },
 
     infoCard: {

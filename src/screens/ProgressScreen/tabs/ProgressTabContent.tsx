@@ -1,4 +1,3 @@
-// src/screens/ProgressScreen/tabs/ProgressTabContent.tsx
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -70,6 +69,7 @@ export const ProgressTabContent: React.FC<Props> = ({
         <View style={styles.cardHeaderRow}>
           <View>
             <Text style={styles.cardTitle}>Heart Rate</Text>
+
             <Text
               style={{
                 color: tokens.colors.textSecondary,
@@ -77,7 +77,7 @@ export const ProgressTabContent: React.FC<Props> = ({
                 marginTop: 3,
               }}
             >
-              Camera PPG measurement
+              Health Connect / Bluetooth
             </Text>
           </View>
 
@@ -107,6 +107,7 @@ export const ProgressTabContent: React.FC<Props> = ({
           }}
         >
           <Text style={styles.cardMainValue}>--</Text>
+
           <Text
             style={[
               styles.unitText,
@@ -142,7 +143,7 @@ export const ProgressTabContent: React.FC<Props> = ({
               fontSize: tokens.fontSize.xs,
             }}
           >
-            Tap to measure your heart rate
+            Tap to view heart rate
           </Text>
         </View>
       </TouchableOpacity>
@@ -156,7 +157,16 @@ export const ProgressTabContent: React.FC<Props> = ({
         >
           <Text style={styles.cardTitle}>Steps</Text>
 
-          <Text style={[styles.cardMainValue, { marginVertical: 16 }]}>--</Text>
+          <Text
+            style={[
+              styles.cardMainValue,
+              {
+                marginVertical: 16,
+              },
+            ]}
+          >
+            --
+          </Text>
 
           <View style={styles.stepDotsRow}>
             <View style={styles.stepDot} />
@@ -176,7 +186,12 @@ export const ProgressTabContent: React.FC<Props> = ({
           <Text style={styles.cardTitle}>Weight</Text>
 
           <Text
-            style={[styles.cardMainValue, { color: tokens.colors.textPrimary }]}
+            style={[
+              styles.cardMainValue,
+              {
+                color: tokens.colors.textPrimary,
+              },
+            ]}
           >
             50 <Text style={styles.unitText}>kg</Text>
           </Text>
@@ -196,7 +211,14 @@ export const ProgressTabContent: React.FC<Props> = ({
         >
           <Text style={styles.cardTitle}>Fasting blood sugar</Text>
 
-          <Text style={[styles.cardMainValue, { marginTop: 24 }]}>
+          <Text
+            style={[
+              styles.cardMainValue,
+              {
+                marginTop: 24,
+              },
+            ]}
+          >
             -- <Text style={styles.unitText}>mg/dl</Text>
           </Text>
         </TouchableOpacity>
@@ -208,11 +230,83 @@ export const ProgressTabContent: React.FC<Props> = ({
         >
           <Text style={styles.cardTitle}>Sleep</Text>
 
-          <Text style={[styles.cardMainValue, { marginTop: 24 }]}>
+          <Text
+            style={[
+              styles.cardMainValue,
+              {
+                marginTop: 24,
+              },
+            ]}
+          >
             -- <Text style={styles.unitText}>hr</Text>
           </Text>
         </TouchableOpacity>
       </View>
+
+      {/* BLE Test Card */}
+      <TouchableOpacity
+        style={styles.cardLarge}
+        onPress={() => onCardPress("BLE Test")}
+        activeOpacity={0.9}
+      >
+        <View style={styles.cardHeaderRow}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.cardTitle}>Bluetooth Device Test</Text>
+
+            <Text
+              style={{
+                marginTop: 4,
+                color: tokens.colors.textSecondary,
+                fontSize: tokens.fontSize.xs,
+              }}
+            >
+              Scan and inspect your smartwatch
+            </Text>
+          </View>
+
+          <View
+            style={{
+              width: 42,
+              height: 42,
+              borderRadius: 21,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: tokens.colors.primarySubtle,
+            }}
+          >
+            <Ionicons
+              name="bluetooth-outline"
+              size={22}
+              color={tokens.colors.primary}
+            />
+          </View>
+        </View>
+
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginTop: tokens.spacing.md,
+          }}
+        >
+          <Text
+            style={{
+              color: tokens.colors.primary,
+              fontSize: tokens.fontSize.xs,
+              fontWeight: "700",
+            }}
+          >
+            Tap to scan devices
+          </Text>
+
+          <Ionicons
+            name="arrow-forward"
+            size={16}
+            color={tokens.colors.primary}
+            style={{ marginLeft: 6 }}
+          />
+        </View>
+      </TouchableOpacity>
     </>
   );
 };
@@ -231,7 +325,15 @@ function MacroItem({
   return (
     <View style={styles.macroItem}>
       <View style={styles.macroIndicatorRow}>
-        <View style={[styles.macroBar, { backgroundColor: color }]} />
+        <View
+          style={[
+            styles.macroBar,
+            {
+              backgroundColor: color,
+            },
+          ]}
+        />
+
         <Text style={styles.macroLabel}>{label}</Text>
       </View>
 

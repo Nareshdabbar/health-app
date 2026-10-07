@@ -1,3 +1,4 @@
+
 import { router } from "expo-router";
 import { useTheme } from "@/src/theme/ThemeContext";
 import React, { useMemo, useState } from "react";
@@ -25,6 +26,11 @@ export const ProgressScreen: React.FC = () => {
       return;
     }
 
+    if (metricName === "BLE Test") {
+      router.push("/(routes)/ble-test" as any);
+      return;
+    }
+
     Alert.alert(
       "Detailed View",
       `Opening deep analytics and history for ${metricName}.`,
@@ -39,7 +45,6 @@ export const ProgressScreen: React.FC = () => {
     >
       <Text style={styles.screenTitle}>Your Health Data</Text>
 
-      {/* Sub-navigation Tabs */}
       <View style={styles.subTabContainer}>
         {subTabs.map((tab) => {
           const isActive = activeSubTab === tab;
@@ -48,7 +53,10 @@ export const ProgressScreen: React.FC = () => {
             <TouchableOpacity
               key={tab}
               onPress={() => setActiveSubTab(tab)}
-              style={[styles.subTabButton, isActive && styles.activeSubTab]}
+              style={[
+                styles.subTabButton,
+                isActive && styles.activeSubTab,
+              ]}
               activeOpacity={0.8}
             >
               <Text
@@ -69,7 +77,6 @@ export const ProgressScreen: React.FC = () => {
         })}
       </View>
 
-      {/* Render Sub-Tab Content Dynamically Based on Click */}
       {activeSubTab === "Progress" && (
         <ProgressTabContent
           styles={styles}
